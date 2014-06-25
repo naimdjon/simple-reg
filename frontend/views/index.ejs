@@ -1,0 +1,63 @@
+<html>
+<head>
+    <link rel="stylesheet" href="simple-reg.css"/>
+    <link rel="stylesheet" href="/lib/bootstrap/bootstrap-3.1.1.min.css"/>
+    <link rel="stylesheet" href="/lib/bootstrap/bootstrap-theme-3.1.1.min.css"/>
+    <link rel="stylesheet" href="/lib/bootstrap/bootstrapValidator.min.css"/>
+    <script src="/lib/bootstrap/jquery-1.11.1.min.js"></script>
+    <script src="/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
+    <script src="/lib/bootstrap/bootstrapValidator.min.js"></script>
+    <title>Bestill time @klarlakk</title>
+    <% include inc_angular_app.ejs %>
+</head>
+<body>
+<div class="hero-unit text-center main">
+    <h1>Online timebestilling hos Klarlakk</h1>
+
+    <p>Her kan du bestille time hos moderne lakkverksted utstyrt med ny lakkabin. Kvaliteten er meget høy, og vi har
+        kort leveringstid.</p>
+
+    <form id="regnummerform" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-5 control-label">Bilens registreringsnummer</label>
+
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="XX12345" name="regnummer"/>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-primary btn-large">
+                    Gå videre
+                </a>
+            </div>
+        </div>
+        <div class="hide">
+            <hr/>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#regnummerform').bootstrapValidator({
+            fields: {
+                regnummer: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Registreringsnummer må være oppgitt'
+                        },
+                        regexp: {
+                            regexp: /^[a-z\s][a-z\s]\s*\d{5}$/i,
+                            message: 'Registreringsnummer skal være i form av ' +
+                                    '"AB 12345"'
+                        }
+                    }
+                }
+            },
+            submitHandler: function (validator, form, submitButton) {
+                var regnummer = validator.getFieldElements('regnummer').val();
+                console.log('regnummer:' + regnummer);
+            }
+        });
+    });
+</script>
+</body>
+</html>
