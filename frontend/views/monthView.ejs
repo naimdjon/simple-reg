@@ -1,0 +1,49 @@
+<div ng-controller="MonthViewCtrl as monthView" class="monthViewDiv">
+    <br/>
+    <div class="btn-group">
+        <button ng-repeat="month in monthView.months"
+                ng-click="monthView.changeMonth(month)"
+                type="button" class="btn btn-default">{{month}}</button>
+    </div>
+    <br/>
+    <br/>
+    <div class="wrapper" style="float:left;">
+        <table class="monthView">
+            <tr class="monthBtns">
+                <th>
+                    <button type="button" class="btn btn-default btn-sm pull-left" ng-click="monthView.changeMonth(-1)"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                </th>
+                <th colspan="6">
+                    <button type="button" class="btn btn-default btn-sm btn-block"><strong class="ng-binding">{{monthView.currentMonth}}</strong></button>
+                </th>
+                <th><button type="button" class="btn btn-default btn-sm pull-left" ng-click="monthView.changeMonth(1)"><i class="glyphicon glyphicon-chevron-right"></i></button></th>
+            </tr>
+            <!--Ukedager-->
+            <tr>
+                <th class="center" ng-show="monthView.showWeekNumbers">#</th>
+                <th class="center"
+                    ng-repeat="dayOfWeek in monthView.daysOfWeek"
+                    ng-style="{borderRight:'{{$index!=6?none:1}}px'}">
+                    {{dayOfWeek.indexOf('none')!=0?dayOfWeek:''}}
+                </th>
+            </tr>
+
+            <tr ng-repeat="week in monthView.calendarView.weeks">
+                <td ng-show="monthView.showWeekNumbers" class="center">
+                    <em>{{week.number}}</em>
+                </td>
+                <td class="calDay"
+                    ng-disabled="date.disabled"
+                    ng-repeat="date in week.days">
+                    <button type="button" style="width:100%;" class="btn btn-default btn-sm"
+                            ng-class="{greenDay : date.isGreenDay, greenBusyDay : date.isBusyGreenDay, notCurrentMonth : !date.isCurrentMonth, busy : date.isBusy}"
+                            ng-click="monthView.newBooking(date)"
+                            ng-mouseenter="monthView.showThisBooking(date)"
+                            ng-mouseleave="monthView.hideBooking(date)">
+                        <span tooltip-html-unsafe="{{date.booking.email}} <br/> {{date.booking.from | date:'dd.MM'}}  &#160;&#160;&#160;   {{date.booking.to | date:'dd.MM'}} <br/>{{date.booking._id}}">{{date.label}}</span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
