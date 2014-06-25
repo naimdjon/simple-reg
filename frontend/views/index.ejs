@@ -1,4 +1,4 @@
-<html>
+<html lang="no" ng-app="regapp">
 <head>
     <link rel="stylesheet" href="simple-reg.css"/>
     <link rel="stylesheet" href="/lib/bootstrap/bootstrap-3.1.1.min.css"/>
@@ -11,7 +11,7 @@
     <% include inc_angular_app.ejs %>
 </head>
 <body>
-<div class="hero-unit text-center main">
+<div class="hero-unit text-center main" ng-controller="ReserveTimeCtrl as MainCtrl">
     <h1>Online timebestilling hos Klarlakk</h1>
 
     <p>Her kan du bestille time hos moderne lakkverksted utstyrt med ny lakkabin. Kvaliteten er meget høy, og vi har
@@ -22,12 +22,10 @@
             <label class="col-md-5 control-label">Bilens registreringsnummer</label>
 
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="XX12345" name="regnummer"/>
+                <input type="text" class="form-control" placeholder="XX12345" name="regnummer" id="test"/>
             </div>
             <div class="col-md-3">
-                <a class="btn btn-primary btn-large">
-                    Gå videre
-                </a>
+                <input type="submit" class="btn btn-primary btn-large" value="Gå videre"/>
             </div>
         </div>
         <div class="hide">
@@ -46,16 +44,19 @@
                         },
                         regexp: {
                             regexp: /^[a-z\s][a-z\s]\s*\d{5}$/i,
-                            message: 'Registreringsnummer skal være i form av ' +
+                            message: 'Registreringsnummer skal være i form av \n' +
                                     '"AB 12345"'
                         }
                     }
                 }
             },
+            live: 'disabled',
             submitHandler: function (validator, form, submitButton) {
                 var regnummer = validator.getFieldElements('regnummer').val();
+
                 console.log('regnummer:' + regnummer);
-            }
+            },
+            submitButtons: 'a[class="btn"]'
         });
     });
 </script>
