@@ -1,4 +1,4 @@
-<div ng-controller="MonthViewCtrl as monthView" class="monthViewDiv">
+<div class="monthViewDiv">
     <!--<br/>
     <div class="btn-group">
         <button ng-repeat="month in monthView.months"
@@ -42,9 +42,9 @@
                 <td class="calDay"
                     ng-disabled="date.disabled"
                     ng-repeat="date in week.days">
-                    <button type="buttohttps://scontent-b-ams.xx.fbcdn.net/hphotos-xfa1/t31.0-8/474387_10151644860860510_1813546827_o.jpget med landsmoder Gro Harlem Brundtland (Ap), som giftet seg med Høyre-politikeren Arne Olav Brundtland, har Tajik og Heggelund forelsket seg tvers av te, sier kommunikasjonsrådgiver Anne Odden i Arbeiderpartiet.-politikeren blir også omtalt som en av Jonas Gahr Støres fortrolige. Ap-lederen vil ikke fortelle om han skal gjeste bryllupet.n" style="width:100%;" class="btn btn-default btn-sm"
+                    <button type="button" style="width:100%;" class="btn btn-default btn-sm"
                             ng-class="{greenDay : date.isGreenDay, greenBusyDay : date.isBusyGreenDay, notCurrentMonth : !date.isCurrentMonth, busy : date.isBusy}"
-                            ng-click="monthView.newBooking(date)"
+                            ng-click="monthView.selectBookingDate(date)"
                             ng-mouseenter="monthView.showThisBooking(date)"
                             ng-mouseleave="monthView.hideBooking(date)">
                         <span tooltip-html-unsafe="{{date.booking.email}} <br/> {{date.booking.from | date:'dd.MM'}}  &#160;&#160;&#160;   {{date.booking.to | date:'dd.MM'}} <br/>{{date.booking._id}}">{{date.label}}</span>

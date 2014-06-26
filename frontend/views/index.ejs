@@ -10,7 +10,7 @@
     <% include inc_angular_app.ejs %>
 </head>
 <body>
-<div class="hero-unit text-center main" ng-controller="ReserveTimeCtrl as MainCtrl">
+<div class="hero-unit text-center main" ng-controller="MonthViewCtrl as monthView">
     <h1>Online timebestilling hos Klarlakk</h1>
 
     <p>Her kan du bestille time hos moderne lakkverksted utstyrt med ny lakkabin. Kvaliteten er meget høy, og vi har
@@ -31,28 +31,36 @@
     <div>
 
         <div>
-            <form class="form-horizontal col-sm-6" role="form" enctype="multipart/form-data">
+            <form class="form-horizontal col-sm-6" role="form" name="newOrderForm" ng-model="newOrderForm" novalidate>
                 <div class="form-group">
                     <label class="control-label">Velg dato</label>
                     <% include monthView.ejs %>
                 </div>
                 <div class="form-group">
-                    <label class="sr-only" for="name">Ditt navn</label>
-                    <input type="text" class="form-control" id="name" placeholder="Ditt navn" ng-model="newOrderForm.name"/>
+                    <span class="help-inline error" ng-show="submitted && newOrderForm.orderDateMissing">Vennligst velg dato!</span>
+                    <label class="control-label" ng-show="newOrderForm.orderDate">Valgt dato:</label>
+                    {{newOrderForm.orderDate.dateStr|| ''}}
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="{true: 'error'}[submitted && newOrderForm.orderOnName.$invalid]">
+                    <label class="sr-only" for="name">Ditt navn</label>
+                    <input type="text" class="form-control" id="name" name="orderOnName" placeholder="Ditt navn" ng-model="newOrderForm.name" required/>
+                    <span class="help-inline error" ng-show="submitted && newOrderForm.orderOnName.$error.required">Vennligst oppgi navn!</span>
+                </div>
+                <div class="form-group" ng-class="{true: 'error'}[submitted && newOrderForm.orderMobile.$invalid]">
                     <label class="sr-only" for="mobile">Mob</label>
-                    <input type="text" class="form-control" id="mobile" placeholder="Mobil" ng-model="newOrderForm.mobile"/>
+                    <input type="text" class="form-control" id="mobile" name="orderMobile" placeholder="Mobil" ng-model="newOrderForm.mobile" required/>
+                    <span class="help-inline error" ng-show="submitted && newOrderForm.orderMobile.$error.required">Vennligst oppgi mobil!</span>
                 </div>
                 <div class="form-group">
                     <label class="sr-only" for="comments">Kommentar</label>
                     <textarea class="form-control" id="comments" placeholder="Kommentar" ng-model="newOrderForm.comments"></textarea>
                 </div>
                 <div class="col-lg-offset-10">
-                <button class="btn btn-primary" ng-click="saveNewItem()">Bestill</button>
+                <button class="btn btn-primary" ng-click="submitted=true; submitOrder()">Bestill</button>
                 </div>
             </form>
         </div>
+        <div class="messagesList" app-messages></div>
     </div>
 </div>
 </body>
