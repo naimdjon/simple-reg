@@ -5,18 +5,25 @@
                 ng-click="monthView.changeMonth(month)"
                 type="button" class="btn btn-default">{{month}}</button>
     </div>
-    <br/>-->
     <br/>
+    <br/>-->
     <div class="wrapper" style="float:left;">
         <table class="monthView">
             <tr class="monthBtns">
                 <th>
-                    <button type="button" class="btn btn-default btn-sm pull-left" ng-click="monthView.changeMonth(-1)"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                    <button type="button" class="btn btn-default btn-sm pull-left" ng-click="monthView.changeMonth(-1)">
+                        <!--<span class="glyphicon glyphicon-chevron-left"></span>-->
+                        &lt;
+                    </button>
                 </th>
                 <th colspan="6">
                     <button type="button" class="btn btn-default btn-sm btn-block"><strong class="ng-binding">{{monthView.currentMonth}}</strong></button>
                 </th>
-                <th><button type="button" class="btn btn-default btn-sm pull-left" ng-click="monthView.changeMonth(1)"><i class="glyphicon glyphicon-chevron-right"></i></button></th>
+                <th>
+                    <button type="button" class="btn btn-default btn-sm pull-left" ng-click="monthView.changeMonth(1)">&gt;
+                        <!--<span class="glyphicon glyphicon-chevron-right"></span>-->
+                    </button>
+                </th>
             </tr>
             <!--Ukedager-->
             <tr>
@@ -35,7 +42,7 @@
                 <td class="calDay"
                     ng-disabled="date.disabled"
                     ng-repeat="date in week.days">
-                    <button type="button" style="width:100%;" class="btn btn-default btn-sm"
+                    <button type="buttohttps://scontent-b-ams.xx.fbcdn.net/hphotos-xfa1/t31.0-8/474387_10151644860860510_1813546827_o.jpget med landsmoder Gro Harlem Brundtland (Ap), som giftet seg med Høyre-politikeren Arne Olav Brundtland, har Tajik og Heggelund forelsket seg tvers av te, sier kommunikasjonsrådgiver Anne Odden i Arbeiderpartiet.-politikeren blir også omtalt som en av Jonas Gahr Støres fortrolige. Ap-lederen vil ikke fortelle om han skal gjeste bryllupet.n" style="width:100%;" class="btn btn-default btn-sm"
                             ng-class="{greenDay : date.isGreenDay, greenBusyDay : date.isBusyGreenDay, notCurrentMonth : !date.isCurrentMonth, busy : date.isBusy}"
                             ng-click="monthView.newBooking(date)"
                             ng-mouseenter="monthView.showThisBooking(date)"
