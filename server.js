@@ -3,9 +3,12 @@ app = express();
 var routes = require('./backend/routes');
 var categories = require('./backend/routes/categories');
 var items = require('./backend/routes/items');
-require('./backend/load_models');
-
+var orders = require('./backend/routes/orders');
+require('./backend/mime')
 //require('./backend/rewrites')
+//moment = require('moment');
+
+require('./backend/load_models');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
@@ -27,7 +30,7 @@ app.use(errorHandler);
 
 
 app.get('/', routes.index );
-app.get('/adminside/list', items.list );
+app.put('/orders/submitOrder', orders.submitOrder);
 app.put('/adminside/items/new', items.new );
 app.get('/adminside/items/image/:itemId', items.image );
 app.get('/adminside/categories', categories.index );
