@@ -1,0 +1,16 @@
+HTTP/1.1 200 OK
+Date: Wed, 25 Jun 2014 22:05:05 GMT
+Content-Type: application/vnd.ms-fontobject
+Content-Length: 20335
+Connection: keep-alive
+Last-Modified: Thu, 13 Feb 2014 17:33:57 GMT
+ETag: "7ad17c6085dee9a33787bac28fb23d46"
+Server: NetDNA-cache/2.2
+Expires: Sat, 20 Jun 2015 22:05:05 GMT
+Cache-Control: max-age=31104000
+Vary: Accept-Encoding
+Access-Control-Allow-Origin: *
+X-Hello-Human: You should work for us! Email: jdorfman+theheader@maxcdn.com or @MaxCDNDeveloper on Twitter
+X-Cache: HIT
+Accept-Ranges: bytes
+
