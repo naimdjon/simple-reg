@@ -16,22 +16,10 @@
     <p>Her kan du bestille time hos moderne lakkverksted utstyrt med ny lakkabin. Kvaliteten er meget høy, og vi har
         kort leveringstid.</p>
 <br/>
-    <form id="regnummerform" class="form-horizontal">
-        <div class="form-group">
-            <label class="col-md-5 control-label">Bilens registreringsnummer</label>
-            <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="XX12345" ng-model="regnummer" name="regnummer"
-                       ng-pattern="/^[a-z\s][a-z\s]\s*\d{5}$/i" ng-maxlength="10" required/>
-            </div>
-            <div class="col-md-3">
-                <input type="submit" class="btn btn-primary btn-large" value="Gå videre" ng-click="MainCtrl.newItem()"/>
-            </div>
-        </div>
-    </form>
     <div>
 
         <div>
-            <form class="form-horizontal col-sm-6" role="form" name="newOrderForm" ng-model="newOrderForm" novalidate>
+            <form class="form-horizontal col-sm-10" role="form" name="newOrderForm" ng-model="newOrderForm" novalidate>
                 <div class="form-group">
                     <label class="control-label">Velg dato</label>
                     <% include monthView.ejs %>
@@ -40,6 +28,13 @@
                     <span class="help-inline error" ng-show="submitted && newOrderForm.orderDateMissing">Vennligst velg dato!</span>
                     <label class="control-label" ng-show="newOrderForm.orderDate">Valgt dato:</label>
                     {{newOrderForm.orderDate.dateStr|| ''}}
+                </div>
+                <div class="form-group" ng-class="{true: 'error'}[submitted && newOrderForm.orderLicencePlate.$invalid]">
+                    <label for="licencePlate">Registreringsnummer</label>
+                    <input type="text" class="form-control" placeholder="XX12345" ng-model="newOrderForm.licencePlate" name="orderLicencePlate" id="licencePlate"
+                           ng-pattern="/^[a-z\s][a-z\s]\s*\d{5}$/i" ng-maxlength="10" required/>
+                    <span class="help-inline error" ng-show="submitted && newOrderForm.licencePlate.$error.required">Vennligst oppgi bilens registreringsnummer!</span>
+                    <span class="help-inline error" ng-show="submitted && newOrderForm.licencePlate.$error.pattern">Registreringsnummer er i formatet XX12345!</span>
                 </div>
                 <div class="form-group" ng-class="{true: 'error'}[submitted && newOrderForm.orderOnName.$invalid]">
                     <label class="sr-only" for="name">Ditt navn</label>

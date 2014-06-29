@@ -1,17 +1,9 @@
-<div class="monthViewDiv">
-    <!--<br/>
-    <div class="btn-group">
-        <button ng-repeat="month in monthView.months"
-                ng-click="monthView.changeMonth(month)"
-                type="button" class="btn btn-default">{{month}}</button>
-    </div>
-    <br/>
-    <br/>-->
-    <div class="wrapper" style="float:left;">
+<div class="monthViewDiv text-center">
+    <div class="wrapper">
         <table class="monthView">
             <tr class="monthBtns">
                 <th>
-                    <button type="button" class="btn btn-default btn-sm pull-left" ng-click="monthView.changeMonth(-1)">
+                    <button type="button" class="btn btn-default btn-sm pull-left text-center" ng-click="monthView.changeMonth(-1)">
                         <!--<span class="glyphicon glyphicon-chevron-left"></span>-->
                         &lt;
                     </button>
@@ -20,15 +12,15 @@
                     <button type="button" class="btn btn-default btn-sm btn-block"><strong class="ng-binding">{{monthView.currentMonth}}</strong></button>
                 </th>
                 <th>
-                    <button type="button" class="btn btn-default btn-sm pull-left" ng-click="monthView.changeMonth(1)">&gt;
+                    <button type="button" class="btn btn-default btn-sm pull-right" ng-click="monthView.changeMonth(1)">&gt;
                         <!--<span class="glyphicon glyphicon-chevron-right"></span>-->
                     </button>
                 </th>
             </tr>
             <!--Ukedager-->
             <tr>
-                <th class="center" ng-show="monthView.showWeekNumbers">#</th>
-                <th class="center"
+                <th class="text-center" ng-show="monthView.showWeekNumbers">#</th>
+                <th class="text-center"
                     ng-repeat="dayOfWeek in monthView.daysOfWeek"
                     ng-style="{borderRight:'{{$index!=6?none:1}}px'}">
                     {{dayOfWeek.indexOf('none')!=0?dayOfWeek:''}}
@@ -36,7 +28,7 @@
             </tr>
 
             <tr ng-repeat="week in monthView.calendarView.weeks">
-                <td ng-show="monthView.showWeekNumbers" class="center">
+                <td ng-show="monthView.showWeekNumbers" class="text-center weekNr">
                     <em>{{week.number}}</em>
                 </td>
                 <td class="calDay"
