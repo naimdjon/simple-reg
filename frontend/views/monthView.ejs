@@ -35,11 +35,9 @@
                     ng-disabled="date.disabled"
                     ng-repeat="date in week.days">
                     <button type="button" style="width:100%;" class="btn btn-default btn-sm"
-                            ng-class="{greenDay : date.isGreenDay, greenBusyDay : date.isBusyGreenDay, notCurrentMonth : !date.isCurrentMonth, busy : date.isBusy}"
+                            ng-class="{notCurrentMonth : !date.isCurrentMonth, busy : date.isBusy, busier : date.isBusier, busiest : date.isBusiest, past : date.isPast, available : date.isAvailable}"
                             ng-click="monthView.selectBookingDate(date)"
-                            ng-mouseenter="monthView.showThisBooking(date)"
-                            ng-mouseleave="monthView.hideBooking(date)">
-                        <span tooltip-html-unsafe="{{date.booking.email}} <br/> {{date.booking.from | date:'dd.MM'}}  &#160;&#160;&#160;   {{date.booking.to | date:'dd.MM'}} <br/>{{date.booking._id}}">{{date.label}}</span>
+                            <span tooltip-html-unsafe="<br/>Ledige plasser: {{date.available}}<br/><br/>">{{date.label}}</span>
                     </button>
                 </td>
             </tr>
