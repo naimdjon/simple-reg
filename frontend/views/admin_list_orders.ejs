@@ -1,0 +1,40 @@
+<html lang="no" ng-app="adminApp">
+<head>
+    <link rel="stylesheet" href="/lib/bootstrap/bootstrap-3.1.1.min.css"/>
+    <link rel="stylesheet" href="/lib/bootstrap/bootstrap-theme-3.1.1.min.css"/>
+    <script src="/lib/jquery-1.11.1.min.js"></script>
+    <script src="/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
+    <link rel="stylesheet" href="/admin.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="/lib/angular/angular-1.2.10.min.js"></script>
+    <script src="/adminapp/controllers.js"></script>
+    <script src="/adminapp/app.js"></script>
+</head>
+<body>
+<div class="mainContent" ng-controller="MainAdminCtrl as MainCtrl">
+    <h4>Liste over ordre</h4>
+    <div>
+        <table class="table table-striped">
+            <tr>
+                <th>#</th>
+                <th>mobil</th>
+                <th>dato</th>
+                <th>pris</th>
+            </tr>
+
+            <%
+            for(var i=0;i < orders.length;i++){
+            %> <tr>
+                <td><%=orders[i].licencePlate%></td>
+                <td><%=orders[i].mobile%></td>
+                <td><%=orders[i].orderDate%></td>
+                <td></td>
+            </tr>
+            <%
+            }
+            %>
+        </table>
+    </div>
+</div>
+</body>
+</html>
