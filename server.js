@@ -1,8 +1,6 @@
 express = require('express');
 app = express();
 var routes = require('./backend/routes');
-var categories = require('./backend/routes/categories');
-var items = require('./backend/routes/items');
 var orders = require('./backend/routes/orders');
 require('./backend/mime')
 moment = require('moment');
@@ -33,7 +31,7 @@ app.use(methodOverride());
 
 // Synchronous Function
 var auth = basicAuthConnect(function(user, pass) {
-    return user == '1' && pass=='1';
+    return true;
 });
 
 app.get('/', routes.index );

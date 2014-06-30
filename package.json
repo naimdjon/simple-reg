@@ -1,0 +1,32 @@
+{
+    "name": "simple-reg",
+    "version": "0.0.1",
+    "description": "simple-reg app",
+    "main": "server.js",
+    "dependencies": {
+        "basic-auth-connect": "^1.0.0",
+        "body-parser": "^1.4.3",
+        "express": "^4.4.4",
+        "method-override": "^2.0.2",
+        "moment": "~2.7.0",
+        "mongoose": "^3.8.12",
+        "mongodb": "^1.4.5",
+        "regexp-clone":"0.0.1",
+        "sliced":"0.0.1"
+        ,"stylus":"^0.46.3"
+        ,"ejs":"1.0.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "start": "node server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/naimdjon/simple-reg.git"
+    },
+    "engines": {
+        "node": "0.10.x",
+        "npm": "1.2.x"
+    },
+    "homepage": "https://github.com/naimdjon/simple-reg"
+}
