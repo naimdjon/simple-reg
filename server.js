@@ -5,10 +5,12 @@ var categories = require('./backend/routes/categories');
 var items = require('./backend/routes/items');
 var orders = require('./backend/routes/orders');
 require('./backend/mime')
+moment = require('moment');
 //require('./backend/rewrites')
 //moment = require('moment');
 
 require('./backend/load_models');
+var basicAuthConnect= require('basic-auth-connect');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
@@ -20,21 +22,24 @@ app.use('/simple-reg', express.static(__dirname + '/frontend/static'));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use(methodOverride());
-app.use(logErrors);
-app.use(clientErrorHandler);
-app.use(errorHandler);
+//app.use(logErrors);
+//app.use(clientErrorHandler);
+//app.use(errorHandler);
 
 //app.use(express.errorHandler());
 //app.use(express.logger('dev'));
 
+// Synchronous Function
+var auth = basicAuthConnect(function(user, pass) {
+    return user == '1' && pass=='1';
+});
 
 app.get('/', routes.index );
-app.put('/orders/submitOrder', orders.submitOrder);
-app.put('/adminside/items/new', items.new );
-app.get('/adminside/items/image/:itemId', items.image );
-app.get('/adminside/categories', categories.index );
-app.put('/adminside/categories/new', categories.new );
+app.post('/orders/submitOrder', orders.submitOrder);
+app.get('/orders/all/:fromDate', orders.all);
+app.get('/adminside/alleordre', auth, orders.adminAll);
 
 var port=process.env.PORT || 3000;
 app.listen(port);
@@ -46,7 +51,7 @@ function logErrors(err, req, res, next) {
     next(err);
 }
 
-function clientErrorHandler(err, req, res, next) {
+function clientError(err, req, res, next) {
     if (req.xhr) {
         res.send(500, { error: 'Something blew up!' });
     } else {

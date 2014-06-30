@@ -37,7 +37,7 @@
                     <button type="button" style="width:100%;" class="btn btn-default btn-sm"
                             ng-class="{notCurrentMonth : !date.isCurrentMonth, busy : date.isBusy, busier : date.isBusier, busiest : date.isBusiest, past : date.isPast, available : date.isAvailable}"
                             ng-click="monthView.selectBookingDate(date)"
-                            <span tooltip-html-unsafe="<br/>Ledige plasser: {{date.available}}<br/><br/>">{{date.label}}</span>
+                            <span tooltip-html-unsafe="<br/>Ledige plasser: {{date.available}} <br/><br/>">{{date.label}}</span>
                     </button>
                 </td>
             </tr>

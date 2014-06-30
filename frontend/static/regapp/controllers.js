@@ -24,12 +24,19 @@ controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,
     this.selectBookingDate = function (d) {
         $scope.newOrderForm.orderDate=d;
         $scope.newOrderForm.orderDateMissing=false;
+        $scope.newOrderForm.available= d.available;
+
     };
 
     $scope.submitOrder = function () {
+        console.log('$scope.newOrderForm.available:'+$scope.newOrderForm.available);
         if(!$scope.newOrderForm.orderDate) {
             $scope.newOrderForm.orderDateMissing=true;
             return;
+        }else if($scope.newOrderForm.available<1) {
+               confirm(new function(){
+                   alert('yes');
+               });
         }
 
         var formdata={

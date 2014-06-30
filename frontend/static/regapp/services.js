@@ -32,14 +32,14 @@ services.factory('monthViewService', function (bookingService) {
                     delete calendarDay.isAvailable;
                     if(moment().isAfter(d)) {
                         calendarDay.isPast=true;
-                    }else if(count==3) {
+                    }else if(count>2) {
                         calendarDay.isBusiest=true;
                     }else if(count==2) {
                         calendarDay.isBusier=true;
                     }else if(count==1) {
                         calendarDay.isBusy=true;
                     }
-                    calendarDay.available=calendarDay.available-count;
+                    calendarDay.available=Math.max(calendarDay.available-count,0);
             });
         });
     }

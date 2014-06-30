@@ -5,6 +5,6 @@ Order=mongoose.model('Order',
        ,mobile: {type: String, required: true, trim: true }
        ,licencePlate: {type: String, required: true, trim: true }
        ,comments: {type: String, required: false, trim: true }
-       ,orderDate:{type:Date}
+       ,orderDate:{type:String}
     })
 );

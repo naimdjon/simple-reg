@@ -11,13 +11,10 @@
 </head>
 <body>
 <div class="hero-unit text-center main" ng-controller="MonthViewCtrl as monthView">
-    <h1>Online timebestilling hos Klarlakk</h1>
-
+    <h3>Online timebestilling hos Klarlakk</h3>
     <p>Her kan du bestille time hos moderne lakkverksted utstyrt med ny lakkabin. Kvaliteten er meget høy, og vi har
         kort leveringstid.</p>
-<br/>
     <div>
-
         <div>
             <form class="form-horizontal col-sm-10" role="form" name="newOrderForm" ng-model="newOrderForm" novalidate>
                 <div class="form-group">
@@ -33,8 +30,8 @@
                     <label for="licencePlate">Registreringsnummer</label>
                     <input type="text" class="form-control" placeholder="XX12345" ng-model="newOrderForm.licencePlate" name="orderLicencePlate" id="licencePlate"
                            ng-pattern="/^[a-z\s][a-z\s]\s*\d{5}$/i" ng-maxlength="10" required/>
-                    <span class="help-inline error" ng-show="submitted && newOrderForm.licencePlate.$error.required">Vennligst oppgi bilens registreringsnummer!</span>
-                    <span class="help-inline error" ng-show="submitted && newOrderForm.licencePlate.$error.pattern">Registreringsnummer er i formatet XX12345!</span>
+                    <span class="help-inline error" ng-show="submitted && newOrderForm.orderLicencePlate.$error.required">Vennligst oppgi bilens registreringsnummer!</span>
+                    <span class="help-inline error" ng-show="submitted && newOrderForm.orderLicencePlate.$error.pattern">Registreringsnummer er i formatet XX12345!</span>
                 </div>
                 <div class="form-group" ng-class="{true: 'error'}[submitted && newOrderForm.orderOnName.$invalid]">
                     <label class="sr-only" for="name">Ditt navn</label>
