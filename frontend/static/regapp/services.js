@@ -5,28 +5,16 @@ var services = angular.module('regapp.services', []);
 
 services.factory('bookingService', function ($http) {
     var bookings;
-    var getBookingsForResource = function (resourceId,from) {
-        var promise = $http.get('/bookings/'+resourceId+"/"+from)
+    var getBookingsForResource = function (from) {
+        var promise = $http.get('/orders/all/'+from)
             .then(function (res) {
                 bookings = res.data;
                 return bookings;
             });
         return promise;
     };
-    var reserveUnit = function (newBookingForm) {
-        var userEmail = newBookingForm.userEmail,resourceId=newBookingForm.resourceId, from = newBookingForm.fromDate, to = newBookingForm.toDate;
-        var result;
-        var promise = $http.put('/booking', JSON.stringify({to_be_cleaned:newBookingForm.to_be_cleaned,userEmail: userEmail, resourceId: resourceId, from: from.format('YYYY-MM-DD'), to: to.format('YYYY-MM-DD')}))
-            .then(function (res) {
-                result = res.data;
-                console.log("newBookingId:"+result["newBookingId"]);
-                return result;
-            });
-        return promise;
-    };
     return {
-        getBookingsForResource: getBookingsForResource,
-        reserveUnit: reserveUnit
+        getBookingsForResource: getBookingsForResource
     };
 });
 
@@ -36,57 +24,56 @@ function weekOfMonth(d){
 }
 
 services.factory('monthViewService', function (bookingService) {
-    function addBookingsToView(start, weeks,resourceId) {
-        bookingService.getBookingsForResource(resourceId, start.format('YYYY-MM-DD')).then(function (data) {
-            console.dir(data);
-            data.forEach(function (booking) {
-                var from = moment(booking.from),to=moment(booking.to);
-                do{
-                    var calendarDay = weeks[weekOfMonth(from)].days[from.weekday()];
-                    if(calendarDay.month==from.month()){
-                        calendarDay.isBusy = true;
-                        calendarDay.booking = booking;
+    function addOrderCountsAndMarkBusy(start, weeks) {
+        bookingService.getBookingsForResource(start.format('YYYYMM')).then(function (data) {
+                angular.forEach(data,function (count, dayOrder) {
+                    var d=moment(dayOrder,'YYYYMMDD');
+                    var calendarDay=weeks[weekOfMonth(d)].days[d.weekday()];
+                    delete calendarDay.isAvailable;
+                    if(moment().isAfter(d)) {
+                        calendarDay.isPast=true;
+                    }else if(count==3) {
+                        calendarDay.isBusiest=true;
+                    }else if(count==2) {
+                        calendarDay.isBusier=true;
+                    }else if(count==1) {
+                        calendarDay.isBusy=true;
                     }
-                }while (from.add('d', 1).isBefore(to) || from.isSame(to));
+                    calendarDay.available=calendarDay.available-count;
             });
         });
     }
 
-    function markGreenPeriods(start,calendarView) {
-        bookingService.getGreenPeriods(start.format('YYYY-MM-DD'),start.clone().add('m',1).format('YYYY-MM-DD'))
-            .then(function (data) {
-                calendarView.greenPeriods=data;
-                calendarView.greenPeriods.forEach(function (greenPeriod) {
-                    var from = moment(greenPeriod.from),to=moment(greenPeriod.to);
-                    if(from.month()==start.month() && from.year()==start.year()){
-                        do{
-                            var calendarDay = calendarView.weeks[weekOfMonth(from)].days[from.weekday()];
-                            calendarDay.isBusy?calendarDay.isBusyGreenDay=true:calendarDay.isGreenDay = true;
-                        }while (from.add('d', 1).isBefore(to) || from.isSame(to));
-                    }
-                });
-            });
-    }
-
-    function generateDates(weeks,start) {
+    function generateDates(start,weeks) {
         var end = start.clone().add('M', 1);
         var runnerDate = (start.clone()).isoWeekday(1);
         while (runnerDate.isBefore(end)) {
             var week = {week: runnerDate.week(), days: [], number: runnerDate.isoWeek()};
             for (var weekDay = 0; weekDay <= 6; weekDay++) {
                 var chosenLabel=runnerDate.format('dddd, D.MMMM YYYY');
-                week.days.push({dateStr:chosenLabel,label: runnerDate.date(),month:runnerDate.month(), isCurrentMonth: (start.month() == runnerDate.month()), momentDate: runnerDate.clone()});
+                var weekDayObj={
+                    dateStr:chosenLabel
+                    ,label: runnerDate.date()
+                    ,month:runnerDate.month()
+                    ,isCurrentMonth: (start.month() == runnerDate.month())
+                    ,isPast: moment().isAfter(runnerDate)
+                    ,available: 3
+                    ,momentDate: runnerDate.clone()
+                };
+                if(!weekDayObj.isPast && weekDayObj.isCurrentMonth) {
+                    weekDayObj.isAvailable=true;
+                }
+                week.days.push(weekDayObj);
                 runnerDate.add('d', 1);
             }
             weeks.push(week);
         }
     }
 
-
-    var generateCalendarMonthView = function (start,resourceId) {
+    var generateCalendarMonthView = function (start) {
         var calendarView={weeks: []};
-        generateDates(calendarView.weeks,start);
-        //addBookingsToView(start, calendarView.weeks,resourceId);
+        generateDates(start,calendarView.weeks);
+        addOrderCountsAndMarkBusy(start, calendarView.weeks);
         //markGreenPeriods(start, calendarView);
         return calendarView;
     };
