@@ -12,7 +12,7 @@ controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,
     this.showWeekNumbers=true
     for (var i = 0; i < 12; i++)this.months.push(moment().month(i).format('MMMM'));
     for (var i = 0; i < 7; i++)this.daysOfWeek.push(moment().startOf('week').add('days', i).format('ddd'));
-    this.calendarView = monthViewService.generateCalendarMonthView(this.start,resourceId);
+    this.calendarView = monthViewService.generateCalendarMonthView(this.start);
     this.changeMonth = function (num) {
         var newStart=isNaN(num)?this.start.clone().month(num):this.start.clone().add('months',num);
         this.currentMonth = newStart.format('MMMM / YYYY');
@@ -31,27 +31,31 @@ controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,
             $scope.newOrderForm.orderDateMissing=true;
             return;
         }
-        console.dir($scope.newOrderForm);
-        var fd = new FormData();
-        fd.append("name",$scope.newOrderForm.name);
-        fd.append("mobile",$scope.newOrderForm.mobile);
-        fd.append("comments",$scope.newOrderForm.comments);
-        fd.append("orderDate",$scope.newOrderForm.orderDate);
-        $http.put("/orders/submitOrder", fd, {
-            headers: {'Content-Type': undefined },
-            transformRequest: fd
-        }).success(function(data,status){
-                if(data.ok) {
-                    console.log("ok");
-                }
-            console.log('XXXXXX');
-            console.dir(data);
-        }).error(function(data, status) {
-                //$scope.error="error:"+e;
-                console.log("error!"+status);
-            }
-        );
+
+        var formdata={
+             orderDate:$scope.newOrderForm.orderDate.momentDate.format('YYYYMMDD')
+            ,name:$scope.newOrderForm.name
+            ,mobile:$scope.newOrderForm.mobile
+            ,comments:$scope.newOrderForm.comments
+            ,licencePlate:$scope.newOrderForm.licencePlate
+        };
+
+        $http({
+            method:"POST"
+            ,url:'/orders/submitOrder'
+            ,data: $.param(formdata)
+            , headers:{'Content-type':"application/x-www-form-urlencoded; charset=utf-8"}
+        })
+            .success(function(data){
+                $scope.message=data;
+                alert('Bestillingen er sendt!');
+            }).error(function(data,status) {
+                $scope.error=data;
+                alert('Det skjedde en feil ved sending av bestillingen!');
+            });
     };
+
+
 
 });
 
