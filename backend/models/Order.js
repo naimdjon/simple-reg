@@ -5,6 +5,7 @@ Order=mongoose.model('Order',
        ,mobile: {type: String, required: true, trim: true }
        ,licencePlate: {type: String, required: true, trim: true }
        ,comments: {type: String, required: false, trim: true }
+       ,isWaitingList: {type: Boolean, required: false}
        ,orderDate:{type:String}
     })
 );

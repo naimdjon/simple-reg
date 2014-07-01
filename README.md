@@ -1,4 +1,6 @@
 simple-reg
 ==========
+todo:
+- venteliste
 
 

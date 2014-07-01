@@ -29,14 +29,10 @@ controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,
     };
 
     $scope.submitOrder = function () {
-        console.log('$scope.newOrderForm.available:'+$scope.newOrderForm.available);
+        //console.log('$scopte.newOrderForm.available:'+$scope.newOrderForm.available);
         if(!$scope.newOrderForm.orderDate) {
             $scope.newOrderForm.orderDateMissing=true;
             return;
-        }else if($scope.newOrderForm.available<1) {
-               confirm(new function(){
-                   alert('yes');
-               });
         }
 
         var formdata={
@@ -46,7 +42,10 @@ controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,
             ,comments:$scope.newOrderForm.comments
             ,licencePlate:$scope.newOrderForm.licencePlate
         };
-
+        if($scope.newOrderForm.available<1) {
+            alert("Siden vi er fullbokket vil du stå på venteliste!");
+            formdata.isWaitingList=true;
+        }
         $http({
             method:"POST"
             ,url:'/orders/submitOrder'
