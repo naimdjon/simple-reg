@@ -31,7 +31,7 @@ app.use(methodOverride());
 
 // Synchronous Function
 var auth = basicAuthConnect(function(user, pass) {
-    return true;
+    return user == 'testbruker1' && pass=='testpass1';
 });
 
 app.get('/', routes.index );
