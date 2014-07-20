@@ -58,11 +58,16 @@ services.factory('monthViewService', function (bookingService) {
                     ,isCurrentMonth: (start.month() == runnerDate.month())
                     ,isPast: moment().isAfter(runnerDate)
                     ,available: 3
+                    ,week: runnerDate.week()
+                    ,isWeekend: (runnerDate.weekday() == 5 || runnerDate.weekday()==6)
                     ,momentDate: runnerDate.clone()
                 };
-                if(!weekDayObj.isPast && weekDayObj.isCurrentMonth) {
+                //console.log("weekDayObj:"+weekDayObj.label+":"+weekDayObj.isWeekend+", week:"+weekDayObj.week);
+                if(!weekDayObj.isPast && weekDayObj.isCurrentMonth && !weekDayObj.isWeekend) {
                     weekDayObj.isAvailable=true;
-                }
+                }else
+                    weekDayObj.available=0;
+
                 week.days.push(weekDayObj);
                 runnerDate.add('d', 1);
             }
