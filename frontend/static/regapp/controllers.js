@@ -1,7 +1,7 @@
 var controllers = angular.module('regapp.controllers', []);
 
 
-controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,$modal) {
+controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,$window) {
     moment.lang('nb');
     var resourceId=window.resourceId,email=window.userEmail;
     this.start = moment({day: 1});
@@ -22,10 +22,14 @@ controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,
     var monthView=this;
     $scope.newOrderForm={};
     this.selectBookingDate = function (d) {
-        $scope.newOrderForm.orderDate=d;
-        $scope.newOrderForm.orderDateMissing=false;
-        $scope.newOrderForm.available= d.available;
-
+        if(d.isWeekend) {
+            alert("Dessverre tar vi ikke imot bestillinger på lørdager og søndager. \n" +
+                "Venngligst velg en annen dato!");
+        }else {
+            $scope.newOrderForm.orderDate=d;
+            $scope.newOrderForm.orderDateMissing=false;
+            $scope.newOrderForm.available= d.available;
+        }
     };
 
     $scope.submitOrder = function () {
