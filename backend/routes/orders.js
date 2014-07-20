@@ -41,6 +41,10 @@ exports.all = function (request, response) {
     });
 };
 
+exports.confirmation = function (request, response) {
+    response.render('confirmation');
+};
+
 exports.adminAll = function (request, response) {
     var fromDate1 = moment().format('YYYYMM');
     var fromDate2 = moment().month(moment().month()+1).format('YYYYMM');

@@ -58,7 +58,7 @@ controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,
         })
             .success(function(data){
                 $scope.message=data;
-                alert('Bestillingen er sendt!');
+                $window.location.href = '/ordrebekreftelse';
             }).error(function(data,status) {
                 $scope.error=data;
                 alert('Det skjedde en feil ved sending av bestillingen!');
