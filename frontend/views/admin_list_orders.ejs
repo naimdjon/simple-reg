@@ -16,19 +16,20 @@
     <div>
         <table class="table table-striped">
             <tr>
-                <th>#</th>
+                <th>regnr</th>
+                <th>navn</th>
                 <th>mobil</th>
                 <th>dato</th>
-                <th>pris</th>
             </tr>
 
             <%
             for(var i=0;i < orders.length;i++){
             %> <tr>
                 <td><%=orders[i].licencePlate%></td>
+                <td><%=orders[i].name%></td>
                 <td><%=orders[i].mobile%></td>
                 <td><%=orders[i].orderDate%></td>
-                <td></td>
+
             </tr>
             <%
             }
