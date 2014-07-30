@@ -6,7 +6,6 @@ exports.submitOrder = function (request, response) {
     console.log("nomer:"+request.body.licencePlate);
     console.log("comments:"+request.body.comments);
     console.log("orderDate:"+request.body.orderDate);
-    //var orderedDate = moment(request.body.orderDate, 'YYYYMMDD');
    var order = new Order;
     order.name = request.body.name;
     order.licencePlate = request.body.licencePlate;
@@ -14,14 +13,12 @@ exports.submitOrder = function (request, response) {
     order.comments = request.body.comments;
     order.isWaitingList = request.body.isWaitingList;
     order.orderDate =request.body.orderDate;
-    console.log('LLO:'+order.orderDate);
     order.save(function (err, order, numberAffected) {
         if (err) {
-            console.log("error:::::::"+err);
+            console.log("error:"+err);
             response.jsonp(400,{error:"missing fields"});
             return;
         }
-        console.log("saved:")
         response.jsonp(200,{result:"ok"});
     });
 
