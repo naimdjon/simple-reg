@@ -26,6 +26,11 @@ controllers.controller("MonthViewCtrl", function ($scope,monthViewService,$http,
             alert("Dessverre tar vi ikke imot bestillinger på lørdager og søndager. \n" +
                 "Venngligst velg en annen dato!");
         }else {
+            console.log("d.momentDate.weekday():"+d.momentDate.weekday());
+            if(d.momentDate.weekday()==4) {
+                alert("Merk at bilen blir levert ut mandag ettermiddag \n" +
+                    "for biler innlevert på fredag!");
+            }
             $scope.newOrderForm.orderDate=d;
             $scope.newOrderForm.orderDateMissing=false;
             $scope.newOrderForm.available= d.available;
