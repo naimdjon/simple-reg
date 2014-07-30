@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="simple-reg.css"/>
 
     <title>Bestill time @klarlakk</title>
-    <% include inc_angular_app.ejs %>
+    <% include includes/inc_angular_app.ejs %>
 </head>
 <body>
 <div class="hero-unit text-center main" ng-controller="MonthViewCtrl as monthView">
-    <h3>Online timebestilling hos Klarlakk</h3>
+    <h3>Online timebestilling</h3>
     <!--<p>Her kan du bestille time hos moderne lakkverksted utstyrt med ny lakkabin. Kvaliteten er meget høy, og vi har
         kort leveringstid.</p>-->
     <div>
@@ -19,7 +19,7 @@
             <form class="form-horizontal col-sm-10" role="form" name="newOrderForm" ng-model="newOrderForm" novalidate>
                 <div class="form-group">
                     <label class="control-label">Velg dato</label>
-                    <% include monthView.ejs %>
+                    <% include includes/monthView.ejs %>
                 </div>
                 <div class="form-group">
                     <span class="help-inline error" ng-show="submitted && newOrderForm.orderDateMissing">Vennligst velg dato!</span>
