@@ -1,0 +1,1 @@
+mongo ds053597.mongolab.com:53597 -u testbruker -p testpassord
