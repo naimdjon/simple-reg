@@ -1,34 +1,49 @@
 <html lang="no" ng-app="adminApp">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="/lib/bootstrap/bootstrap-3.1.1.min.css"/>
     <link rel="stylesheet" href="/lib/bootstrap/bootstrap-theme-3.1.1.min.css"/>
     <script src="/lib/jquery-1.11.1.min.js"></script>
     <script src="/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
-    <link rel="stylesheet" href="/admin.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="/lib/angular/angular-1.2.10.min.js"></script>
+    <script type="text/javascript" src="/lib/mindmup-editabletable.js"></script>
     <script src="/adminapp/controllers.js"></script>
     <script src="/adminapp/app.js"></script>
+
+    <link rel="stylesheet" href="/admin.css"/>
 </head>
 <body>
 <div class="mainContent" ng-controller="MainAdminCtrl as MainCtrl">
     <h4>Liste over ordre</h4>
+    <div style="height:40px;">
+        <div id="messageOk" class="alert alert-success" role="alert" style="width:400px;"></div>
+        <div id="messageError" class="alert alert-danger" role="alert" style="width:400px;"></div>
+    </div>
     <div>
-        <table class="table table-striped">
+        <table  id="data" class="table table-striped">
             <tr>
                 <th>regnr</th>
                 <th>navn</th>
                 <th>mobil</th>
                 <th>dato</th>
+                <th>pris</th>
+                <th>kommentar</th>
             </tr>
 
             <%
             for(var i=0;i < orders.length;i++){
-            %> <tr>
+                var price=orders[i].price;
+                if(price == undefined) {
+                    price="";
+                }
+            %> <tr id="<%=orders[i]._id%>">
                 <td><%=orders[i].licencePlate%></td>
                 <td><%=orders[i].name%></td>
                 <td><%=orders[i].mobile%></td>
                 <td><%=orders[i].orderDate%></td>
+                <td><%=price%></td>
+                <td><%=orders[i].comments%></td>
 
             </tr>
             <%
@@ -37,5 +52,37 @@
         </table>
     </div>
 </div>
+<script>
+    $( document).ready(function() {
+        $("#messageOk").hide();
+        $("#messageError").hide();
+
+        $('#data').editableTableWidget();
+        $('#data td').on('change', function (evt, newValue) {
+            var cell = $(this);
+            var objectId=cell.parent().attr('id');
+            var field=['licencePlate','name','mobile','orderDate','price','comments'][cell.index()];
+            console.log("objectID:"+objectId+", col:"+field+", new val:"+newValue);
+            $.ajax({
+                type: "POST",
+                url: "/adminside/updateOrder",
+                data: { fieldName: field, orderId: objectId, updateValue:newValue}
+            })
+            .success(function( msg ) {
+                 //$("#messageOk").removeClass('hide');
+                 $("#messageOk").text(field+" er lagret!").show(200,function(e){
+                     $("#messageOk").fadeOut(3000);
+                 });
+            })
+            .error(function( msg ) {
+                 //$("#messageOk").removeClass('hide');
+                 $("#messageError").text("feil ved lagring av "+field).show(200,function(e){
+                     $("#messageError").fadeOut(6000);
+                 });
+            });
+
+        });
+    });
+</script>
 </body>
 </html>
