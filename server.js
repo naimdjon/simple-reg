@@ -38,6 +38,7 @@ app.get('/', routes.index );
 app.post('/orders/submitOrder', orders.submitOrder);
 app.get('/orders/all/:fromDate', orders.all);
 app.get('/adminside/alleordre', auth, orders.adminAll);
+app.post('/adminside/updateOrder', auth, orders.updateOrder);
 app.get('/ordrebekreftelse', orders.confirmation);
 
 var port=process.env.PORT || 3000;
