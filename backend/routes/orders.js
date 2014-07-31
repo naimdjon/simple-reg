@@ -51,6 +51,27 @@ exports.adminAll = function (request, response) {
     });
 };
 
+exports.updateOrder = function (request, response) {
+    var fieldName = request.body.fieldName;
+    var objectId = request.body.orderId;
+    var value = request.body.updateValue;
+    var update={}
+    update[fieldName]=value;
+    console.log("field:"+fieldName+", objectId:"+objectId+", val:"+value);
+    Order.findByIdAndUpdate(
+        objectId,
+        {$set:update},
+        function(err,order){
+            if(order!=undefined && order[fieldName]==value) {
+                response.jsonp(200,{result:"ok"});
+            }else {
+                response.jsonp(400,{result:"error"});
+            }
+        });
+
+
+};
+
 function toDate(momentDateStr) {
     var momentDate=moment(momentDateStr, 'YYYYMMDD');
     return new Date(momentDate.year(),momentDate.month(),momentDate.day());
