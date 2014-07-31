@@ -2,7 +2,7 @@
 <head>
     <link rel="stylesheet" href="/lib/bootstrap/bootstrap-3.1.1.min.css"/>
     <link rel="stylesheet" href="/lib/bootstrap/bootstrap-theme-3.1.1.min.css"/>
-    <script src="/lib/bootstrap/jquery-1.11.1.min.js"></script>
+    <script src="/lib/jquery-1.11.1.min.js"></script>
     <script src="/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
     <link rel="stylesheet" href="simple-reg.css"/>
 
@@ -31,7 +31,7 @@
                     <input type="text" class="form-control" placeholder="XX12345" ng-model="newOrderForm.licencePlate" name="orderLicencePlate" id="licencePlate"
                            ng-pattern="/^[a-z\s][a-z\s]\s*\d{5}$/i" ng-maxlength="10" required/>
                     <span class="help-inline error" ng-show="submitted && newOrderForm.orderLicencePlate.$error.required">Vennligst oppgi bilens registreringsnummer!</span>
-                    <span class="help-inline error" ng-show="submitted && newOrderForm.orderLicencePlate.$error.pattern">Registreringsnummer er i formatet XX12345!</span>
+                    <span class="help-inline error" ng-show="submitted && newOrderForm.orderLicencePlate.$error.pattern">Registreringsnummer skal være i formatet XX12345!</span>
                 </div>
                 <div class="form-group" ng-class="{true: 'error'}[submitted && newOrderForm.orderOnName.$invalid]">
                     <label class="sr-only" for="name">Ditt navn</label>
