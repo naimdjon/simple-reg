@@ -56,10 +56,6 @@ services.factory('monthViewService', function (bookingService) {
                             nextCalendarDay.isBusier=true;
                         }
                     }else if(count==1) {
-                        console.log("d:"+d.format());
-                        console.log("n:"+nextMomentDay.format());
-                        console.log("calendarDay:"+calendarDay.dateStr);
-                        console.log("nextCalendarDay:"+nextCalendarDay.dateStr);
                         calendarDay.isBusy=true;
                         if(shouldMarkNextDay) {
                             nextCalendarDay.isBusy=true;
