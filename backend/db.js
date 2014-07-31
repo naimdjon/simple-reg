@@ -1,6 +1,8 @@
 Schema = mongoose.Schema;
-//var dbURL="mongodb://testbruker:testpassord@ds053597.mongolab.com:53597/heroku_app26956465"
-var dbURL="mongodb://localhost/simple-reg"
+var dbURL="mongodb://testbruker:testpassord@ds053597.mongolab.com:53597/heroku_app26956465"
+//var dbURL="mongodb://localhost/simple-reg"
+
+mongoose.set('debug', 'true');
 var connect = function () {
     var options = { server: { socketOptions: { keepAlive: 1 } } }
     console.log("connected to the DB");
