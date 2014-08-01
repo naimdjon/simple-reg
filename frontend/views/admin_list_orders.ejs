@@ -7,49 +7,30 @@
     <link rel="stylesheet" href="/lib/bootstrap/bootstrap-theme-3.1.1.min.css"/>
     <script src="/lib/jquery-1.11.1.min.js"></script>
     <script src="/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
+<!--
     <script type="text/javascript" src="/lib/angular/angular-1.2.10.min.js"></script>
-    <script type="text/javascript" src="/lib/mindmup-editabletable.js"></script>
-    <script src="/adminapp/controllers.js"></script>
-    <script src="/adminapp/app.js"></script>
+-->
+    <!--<script type="text/javascript" src="/lib/mindmup-editabletable.js"></script>-->
+    <!--<script src="/adminapp/controllers.js"></script>
+    <script src="/adminapp/app.js"></script>-->
+
+    <script src="/lib/jquery.handsontable.full.js"></script>
+    <link rel="stylesheet" href="/lib/jquery.handsontable.full.css"/>
+
 
     <link rel="stylesheet" href="/admin.css"/>
 </head>
 <body>
-<div class="mainContent" ng-controller="MainAdminCtrl as MainCtrl">
-    <h4>Liste over ordre</h4>
-    <div style="height:40px;">
+<div class="mainContent">
+<h4>Ordre</h4>
+    <div style="height:15px;">
         <div id="messageOk" class="alert alert-success" role="alert" style="width:400px;"></div>
         <div id="messageError" class="alert alert-danger" role="alert" style="width:400px;"></div>
     </div>
-    <div>
-        <table  id="data" class="table table-striped">
-            <tr>
-                <th>regnr</th>
-                <th>navn</th>
-                <th>mobil</th>
-                <th>dato</th>
-                <th>pris</th>
-                <th>kommentar</th>
-            </tr>
+    
+    <div style="margin-top:20px;">
+        <table id="dataTable">
 
-            <%
-            for(var i=0;i < orders.length;i++){
-                var price=orders[i].price;
-                if(price == undefined) {
-                    price="";
-                }
-            %> <tr id="<%=orders[i]._id%>">
-                <td><%=orders[i].licencePlate%></td>
-                <td><%=orders[i].name%></td>
-                <td><%=orders[i].mobile%></td>
-                <td><%=orders[i].orderDate%></td>
-                <td><%=price%></td>
-                <td><%=orders[i].comments%></td>
-
-            </tr>
-            <%
-            }
-            %>
         </table>
     </div>
 </div>
@@ -58,30 +39,58 @@
         $("#messageOk").hide();
         $("#messageError").hide();
 
-        $('#data').editableTableWidget();
-        $('#data td').on('change', function (evt, newValue) {
-            var cell = $(this);
-            var objectId=cell.parent().attr('id');
-            var field=['licencePlate','name','mobile','orderDate','price','comments'][cell.index()];
-            console.log("objectID:"+objectId+", col:"+field+", new val:"+newValue);
-            $.ajax({
-                type: "POST",
-                url: "/adminside/updateOrder",
-                data: { fieldName: field, orderId: objectId, updateValue:newValue}
-            })
-            .success(function( msg ) {
-                 //$("#messageOk").removeClass('hide');
-                 $("#messageOk").text(field+" er lagret!").show(200,function(e){
-                     $("#messageOk").fadeOut(3000);
-                 });
-            })
-            .error(function( msg ) {
-                 //$("#messageOk").removeClass('hide');
-                 $("#messageError").text("feil ved lagring av "+field).show(200,function(e){
-                     $("#messageError").fadeOut(6000);
-                 });
-            });
+        var data = [
+            ["", "licencePlate", "name", "mobile", "orderDate","price","comments"],
+                <%
+                    for(var i=0;i < orders.length;i++){
+                    var o=orders[i];
+                    var price=o.price;
+                    if(price == undefined) price="";
+                    %>
+                        ['<%=o._id%>','<%=o.licencePlate%>', '<%=o.name%>', '<%=o.mobile%>', '<%=o.orderDate%>', '<%=price%>','<%=o.comments%>']
 
+                    <%
+                        if(i<orders.length){
+                        %><%=','%><%
+                        }
+                    }
+                %>
+        ];
+
+        $("#dataTable").handsontable({
+            data: data,
+            colHeaders: true,
+            afterChange: function(changes, source) {
+            if(source!='loadData'){
+                console.log(changes[0][0]);
+                var changedRow=data[changes[0][0]];
+                var field=data[0][changes[0][1]];
+                var objectId=changedRow[0];
+                var newValue=changes[0][3];
+                console.log("fieldName:"+field);
+                console.log("changedRow:"+changedRow);
+                console.log("id:"+objectId);
+                console.log("value:"+newValue);
+                console.log(changes);
+
+                $.ajax({
+                    type: "POST",
+                    url: "/adminside/updateOrder",
+                    data: { fieldName: field, orderId: objectId, updateValue:newValue}
+                })
+                .success(function( msg ) {
+                     $("#messageOk").text(field+" er lagret!").show(200,function(e){
+                         $("#messageOk").fadeOut(3000);
+                     });
+                })
+                .error(function( msg ) {
+                     $("#messageError").text("feil ved lagring av "+field).show(200,function(e){
+                         $("#messageError").fadeOut(6000);
+                     });
+                });
+
+            }
+          }
         });
     });
 </script>
