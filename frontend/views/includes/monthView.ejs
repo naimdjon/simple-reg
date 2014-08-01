@@ -1,18 +1,21 @@
 <div class="monthViewDiv text-center">
-    <div class="wrapper">
+    <div class="wrapper well">
         <table class="monthView">
             <tr class="monthBtns">
-                <th>
-                    <button type="button" class="btn btn-default btn-sm pull-left text-center" ng-click="monthView.changeMonth(-1)">
+                <!--<th align="right" style="padding:0;">
+                    <button type="button" class="btn btn-dark btn-sm pull-left text-center" ng-click="monthView.changeMonth(-1)">
+                        &lt;
+                    </button>
+                </th>-->
+                <th colspan="8" align="center" style="text-align: center;">
+                    <button type="button" class="btn btn-default btn-sm text-center" ng-click="monthView.changeMonth(-1)">
                         <!--<span class="glyphicon glyphicon-chevron-left"></span>-->
                         &lt;
                     </button>
-                </th>
-                <th colspan="6">
-                    <button type="button" class="btn btn-default btn-sm btn-block"><strong class="ng-binding">{{monthView.currentMonth}}</strong></button>
-                </th>
-                <th>
-                    <button type="button" class="btn btn-default btn-sm pull-right" ng-click="monthView.changeMonth(1)">&gt;
+                    <button type="button" class="btn btn-default btn-sm" style="width:70%;"><strong class="ng-binding">{{monthView.currentMonth}}</strong></button>
+                <!--</th>
+                <th>-->
+                    <button type="button" class="btn btn-default btn-sm" ng-click="monthView.changeMonth(1)">&gt;
                         <!--<span class="glyphicon glyphicon-chevron-right"></span>-->
                     </button>
                 </th>
@@ -31,12 +34,11 @@
                 <td ng-show="monthView.showWeekNumbers" class="text-center weekNr">
                     <em>{{week.number}}</em>
                 </td>
-                <td class="calDay"
-                    ng-disabled="date.disabled"
+                <td ng-disabled="date.disabled"
                     ng-repeat="date in week.days">
-                    <button type="button" style="width:100%;" class="btn btn-default btn-sm"
+                    <button type="button" style="width:99%;margin:0;padding:0;" class="btn btn-default btn-sm"
                             ng-class="{notCurrentMonth : !date.isCurrentMonth, busy : date.isBusy, busier : date.isBusier, busiest : date.isBusiest, past : date.isPast, available : date.isAvailable}"
-                            ng-click="monthView.selectBookingDate(date)"
+                            ng-click="monthView.selectBookingDate(date)">
                             <span tooltip-html-unsafe="<br/>Ledige plasser: {{date.available}} <br/><br/>">{{date.label}}</span>
                     </button>
                 </td>
